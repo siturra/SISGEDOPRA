@@ -1,0 +1,28 @@
+{
+  "name": "sisgedopra",
+  "version": "1.0.0",
+  "description": "Frontend web para proyecto Ingeniería de Software",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siturra/SISGEDOPRA.git"
+  },
+  "keywords": [
+    "usach",
+    "nodejs",
+    "vue",
+    "javascript"
+  ],
+  "author": "Felipe Gaete, Braulio Castro, Hugo Saavedra, Sebastián Iturra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/siturra/SISGEDOPRA/issues"
+  },
+  "homepage": "https://github.com/siturra/SISGEDOPRA#readme",
+  "dependencies": {
+    "vue": "^2.5.17"
+  }
+}
