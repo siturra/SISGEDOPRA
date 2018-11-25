@@ -50,15 +50,17 @@ export default {
       },
       loading: {
         submit: false
-      },
-      msg: 'Welcome to Your Vue.js App'
+      }
     }
+  },
+  mounted () {
+    console.log(process.env.VUE_APP_BACKEND_API_URL)
   },
   methods: {
     onSubmit () {
       this.loading.submit = true
       window.axios({
-        url: 'http://18.213.206.200/login',
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/login`,
         method: 'POST',
         data: this.form
       })
