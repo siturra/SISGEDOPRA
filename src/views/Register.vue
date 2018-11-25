@@ -21,7 +21,19 @@
       name="rut"
       @change="form.rut"
       )
-      v-submit Enviar Registro
+      v-input(
+      type="email",
+      label="Correo Electrónico",
+      name="email"
+      @change="form.email"
+      )
+      v-input(
+      type="password",
+      label="Contraseña",
+      name="password"
+      @change="form.password"
+      )
+      v-submit(:loading="loading.submit") {{loading.submit}}
 </template>
 
 <script>
@@ -36,11 +48,15 @@ export default {
         email: '',
         password: ''
       },
+      loading: {
+        submit: false
+      },
       msg: 'Welcome to Your Vue.js App'
     }
   },
   methods: {
     onSubmit () {
+      this.loading.submit = true
       window.axios({
         url: 'http://18.213.206.200/login',
         method: 'POST',
@@ -50,6 +66,9 @@ export default {
           console.log(response.data)
         })
         .catch((_) => {})
+        .finally(() => {
+          this.loading.submit = false
+        })
     }
   }
 }
