@@ -1,6 +1,5 @@
-<template>
-  <div class="hello">
-  </div>
+<template lang="pug">
+  p Login
 </template>
 
 <script>

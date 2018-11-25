@@ -1,12 +1,11 @@
 <template lang="pug">
   #app
-    img(src="./assets/logo.png")
+    p
+      router-link(to="/registro") Registro
+      |
+      router-link(to="/login") Login
+
     router-view
-
-    input(v-model="name")
-    input(v-model="lastName")
-
-    p {{fullName}}
 </template>
 
 <script>
@@ -14,13 +13,6 @@ export default {
   name: 'App',
   data () {
     return {
-      name: '',
-      lastName: ''
-    }
-  },
-  computed: {
-    fullName () {
-      return `${this.name} ${this.lastName}`
     }
   }
 }

@@ -1,0 +1,56 @@
+<template lang="pug">
+  div
+    h1 Register
+
+    form(v-on:submit.prevent="onSubmit")
+      v-input(
+      type="text",
+      label="Ingrese Nombres",
+      name="firstName"
+      @change="form.firstName"
+      )
+      v-input(
+      type="text",
+      label="Ingrese Apellidos",
+      name="lastName"
+      @change="form.lastName"
+      )
+      v-input(
+      type="text",
+      label="Ingrese Rut",
+      name="rut"
+      @change="form.rut"
+      )
+      v-submit Enviar Registro
+</template>
+
+<script>
+export default {
+  name: 'Register',
+  data () {
+    return {
+      form: {
+        firstName: '',
+        lastName: '',
+        rut: '',
+        email: '',
+        password: ''
+      },
+      msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    onSubmit () {
+      window.axios({
+        url: 'http://18.213.206.200/login',
+        method: 'POST',
+        data: this.form
+      })
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch((_) => {})
+    }
+  }
+}
+</script>
