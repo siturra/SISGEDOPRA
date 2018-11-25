@@ -1,13 +1,28 @@
-<template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
-  </div>
+<template lang="pug">
+  #app
+    img(src="./assets/logo.png")
+    router-view
+
+    input(v-model="name")
+    input(v-model="lastName")
+
+    p {{fullName}}
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      name: '',
+      lastName: ''
+    }
+  },
+  computed: {
+    fullName () {
+      return `${this.name} ${this.lastName}`
+    }
+  }
 }
 </script>
 

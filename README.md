@@ -1,6 +1,11 @@
-# sisgedopra
+# sisgedopra FrontEnd
 
 > A Vue.js project
+
+Sistema de Gestión Documental de Procesos Administrativos (SISGEDOPRA), es un software desarrollado por 4 estudiantes de
+la Universidad Santiago de Chile, que permite modelar cualquier proceso administrativo de una Institución.
+
+En este repositorio encontrarás el Backend del Software [https://github.com/braulioUsach/ingeso-SISGEDOPRA-api]
 
 ## Build Setup
 
