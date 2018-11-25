@@ -3,7 +3,7 @@
     label(:for="name") {{ label }}
     input.form-control(
     :type="type"
-    :placeholder="label"
+    :placeholder="placeholder"
     :id="name"
     :name="name"
     )
@@ -21,6 +21,10 @@ export default {
       default: 'text'
     },
     label: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
       type: String,
       default: ''
     }
