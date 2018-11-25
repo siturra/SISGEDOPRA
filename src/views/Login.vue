@@ -22,8 +22,7 @@
           )
           v-submit(:loading="loading.submit") Ingresar
           p
-            a.btn-link(href="/registro") no tengo cuenta, registrarme
-
+            router-link(:to="{ name: 'Register' }") no tengo cuenta, registrarme
 </template>
 
 <script>
@@ -41,7 +40,6 @@ export default {
     }
   },
   mounted () {
-    console.log(process.env.VUE_APP_BACKEND_API_URL)
   },
   methods: {
     onSubmit () {
