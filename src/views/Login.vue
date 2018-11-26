@@ -9,10 +9,11 @@
           v-input(
           :errors="errors"
           type="email"
-          label="Correo Electrónico"
+          label="Correo electrónico"
           name="email"
+          ref="email"
+          v-model="form.email"
           placeholder="ejemplo@usach.cl"
-          @change="form.email"
           )
           v-input(
           :errors="errors"
@@ -20,8 +21,14 @@
           label="Contraseña"
           placeholder=""
           name="password"
-          @change="form.password"
+          ref="password"
+          v-model="form.password"
           )
+
+          .alert.alert-danger(role="alert" v-if="errors['error']")
+            i.material-icons warning
+            |{{ errors['error'] }}
+
           v-submit(:loading="loading.submit") Ingresar
           p
             router-link(:to="{ name: 'Register' }") no tengo cuenta, registrarme
@@ -57,6 +64,11 @@ export default {
         })
         .catch((error) => {
           this.errors = error.response.data
+          console.log(this.errors)
+          if (Object.keys(this.errors).length > 0) {
+            let firstError = Object.keys(this.errors)[0]
+            this.$refs[firstError].$refs[firstError].focus()
+          }
         })
         .finally(() => {
           this.loading.submit = false

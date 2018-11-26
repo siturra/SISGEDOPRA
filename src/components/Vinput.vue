@@ -7,6 +7,8 @@
     :id="name"
     :name="name"
     :class="{'is-invalid': errors[name]}"
+    :ref="name"
+    @input="updateInput($event.target.value)"
     )
     .invalid-feedback(v-for="e in errors[name]") {{e}}
 </template>
@@ -21,6 +23,10 @@ export default {
       type: String,
       default: 'name'
     },
+    value: {
+      type: String,
+      default: ''
+    },
     type: {
       type: String,
       default: 'text'
@@ -32,6 +38,11 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    }
+  },
+  methods: {
+    updateInput (newVal) {
+      this.$emit('input', newVal)
     }
   }
 }

@@ -10,15 +10,17 @@
           type="text"
           label="Ingrese Nombres"
           :errors="errors"
+          ref="firstName"
           name="firstName"
-          @change="form.firstName"
+          v-model="form.firstName"
           )
           v-input(
           type="text"
           label="Ingrese Apellidos"
           :errors="errors"
           name="lastName"
-          @change="form.lastName"
+          ref="lastName"
+          v-model="form.lastName"
           )
           v-input(
           :errors="errors"
@@ -26,15 +28,17 @@
           label="Ingrese Rut"
           placeholder="18.765.525-0"
           name="rut"
-          @change="form.rut"
+          ref="rut"
+          v-model="form.rut"
           )
           v-input(
           :errors="errors"
           type="email"
-          label="Correo Electrónico"
+          label="Correo electrónico"
           name="email"
+          ref="email"
           placeholder="ejemplo@usach.cl"
-          @change="form.email"
+          v-model="form.email"
           )
           v-input(
           :errors="errors"
@@ -42,8 +46,14 @@
           label="Contraseña"
           placeholder=""
           name="password"
-          @change="form.password"
+          ref="password"
+          v-model="form.password"
           )
+
+          .alert.alert-danger(role="alert" v-if="errors['error']")
+            i.material-icons warning
+            |{{ errors['error'] }}
+
           v-submit(:loading="loading.submit") Registrarme
           p
             router-link(:to="{ name: 'Login2' }") tengo cuenta, ingresar
@@ -82,6 +92,8 @@ export default {
         })
         .catch((error) => {
           this.errors = error.response.data
+          let firstError = Object.keys(this.errors)[0]
+          this.$refs[firstError].$refs[firstError].focus()
         })
         .finally(() => {
           this.loading.submit = false
