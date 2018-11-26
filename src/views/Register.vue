@@ -9,16 +9,19 @@
           v-input(
           type="text"
           label="Ingrese Nombres"
+          :errors="errors"
           name="firstName"
           @change="form.firstName"
           )
           v-input(
           type="text"
           label="Ingrese Apellidos"
+          :errors="errors"
           name="lastName"
           @change="form.lastName"
           )
           v-input(
+          :errors="errors"
           type="text"
           label="Ingrese Rut"
           placeholder="18.765.525-0"
@@ -26,6 +29,7 @@
           @change="form.rut"
           )
           v-input(
+          :errors="errors"
           type="email"
           label="Correo Electrónico"
           name="email"
@@ -33,6 +37,7 @@
           @change="form.email"
           )
           v-input(
+          :errors="errors"
           type="password"
           label="Contraseña"
           placeholder=""
@@ -49,6 +54,7 @@ export default {
   name: 'Register',
   data () {
     return {
+      errors: {},
       form: {
         firstName: '',
         lastName: '',
@@ -67,14 +73,16 @@ export default {
     onSubmit () {
       this.loading.submit = true
       window.axios({
-        url: `${process.env.VUE_APP_BACKEND_API_URL}/register`,
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/signup`,
         method: 'POST',
         data: this.form
       })
         .then((response) => {
           console.log(response.data)
         })
-        .catch((_) => {})
+        .catch((error) => {
+          this.errors = error.response.data
+        })
         .finally(() => {
           this.loading.submit = false
         })

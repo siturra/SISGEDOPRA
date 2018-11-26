@@ -7,6 +7,7 @@
 
         form(v-on:submit.prevent="onSubmit")
           v-input(
+          :errors="errors"
           type="email"
           label="Correo Electrónico"
           name="email"
@@ -14,6 +15,7 @@
           @change="form.email"
           )
           v-input(
+          :errors="errors"
           type="password"
           label="Contraseña"
           placeholder=""
@@ -30,6 +32,7 @@ export default {
   name: 'Login',
   data () {
     return {
+      errors: {},
       form: {
         email: '',
         password: ''
@@ -52,7 +55,9 @@ export default {
         .then((response) => {
           console.log(response.data)
         })
-        .catch((_) => {})
+        .catch((error) => {
+          this.errors = error.response.data
+        })
         .finally(() => {
           this.loading.submit = false
         })

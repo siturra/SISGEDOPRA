@@ -6,12 +6,17 @@
     :placeholder="placeholder"
     :id="name"
     :name="name"
+    :class="{'is-invalid': errors[name]}"
     )
+    .invalid-feedback(v-for="e in errors[name]") {{e}}
 </template>
 <script>
 export default {
   name: 'Vinput',
   props: {
+    errors: {
+      type: Object
+    },
     name: {
       type: String,
       default: 'name'
