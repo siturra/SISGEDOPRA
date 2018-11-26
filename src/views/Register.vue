@@ -56,7 +56,7 @@
 
           v-submit(:loading="loading.submit") Registrarme
           p
-            router-link(:to="{ name: 'Login2' }") tengo cuenta, ingresar
+            router-link(:to="{ name: 'Login' }") tengo cuenta, ingresar
 </template>
 
 <script>
