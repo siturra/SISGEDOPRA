@@ -2,40 +2,12 @@
   .container
     .row.justify-content-center
       .col-6
-        div.text-center
-          img.logo-login(src="../assets/logo.png")
-        h3 Ingresar
-
-        form(v-on:submit.prevent="onSubmit")
-          v-input(
-          :errors="errors"
-          type="email"
-          label="Correo electrónico"
-          name="email"
-          ref="email"
-          v-model="form.email"
-          placeholder="ejemplo@usach.cl"
-          )
-          v-input(
-          :errors="errors"
-          type="password"
-          label="Contraseña"
-          placeholder=""
-          name="password"
-          ref="password"
-          v-model="form.password"
-          )
-
-          alert-danger(:errors="errors")
-
-          v-submit(:loading="loading.submit") Ingresar
-          p
-            router-link(:to="{ name: 'Register' }") no tengo cuenta, registrarme
+        h3 Home
 </template>
 
 <script>
 export default {
-  name: 'Login',
+  name: 'Home',
   data () {
     return {
       errors: {},

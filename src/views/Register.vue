@@ -2,13 +2,14 @@
   .container
     .row.justify-content-center
       .col-6
-        img.logo(src="../assets/logo.png")
+        div.text-center
+          img.logo-login(src="../assets/logo.png")
         h3 Registro
 
         form(v-on:submit.prevent="onSubmit")
           v-input(
           type="text"
-          label="Ingrese Nombres"
+          label="Nombres"
           :errors="errors"
           ref="firstName"
           name="firstName"
@@ -16,7 +17,7 @@
           )
           v-input(
           type="text"
-          label="Ingrese Apellidos"
+          label="Apellidos"
           :errors="errors"
           name="lastName"
           ref="lastName"
@@ -25,7 +26,7 @@
           v-input(
           :errors="errors"
           type="text"
-          label="Ingrese Rut"
+          label="Rut"
           placeholder="18.765.525-0"
           name="rut"
           ref="rut"
@@ -50,9 +51,7 @@
           v-model="form.password"
           )
 
-          .alert.alert-danger(role="alert" v-if="errors['error']")
-            i.material-icons warning
-            |{{ errors['error'] }}
+          alert-danger(:errors="errors")
 
           v-submit(:loading="loading.submit") Registrarme
           p
@@ -82,7 +81,7 @@ export default {
   methods: {
     onSubmit () {
       this.loading.submit = true
-      window.axios({
+      this.axios({
         url: `${process.env.VUE_APP_BACKEND_API_URL}/signup`,
         method: 'POST',
         data: this.form
