@@ -5,6 +5,7 @@ import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Home from '@/views/Home'
 import Document from '@/views/Document'
+import Flows from '@/views/Flows'
 import Layout from '@/views/layouts/authenticated/Index'
 
 Vue.use(Router)
@@ -30,7 +31,8 @@ let router = new Router({
       meta: {requiredAuth: true},
       children: [
         {path: '', component: Home, name: 'home'},
-        {path: '/documentos', component: Document, name: 'documents'}
+        {path: '/documentos', component: Document, name: 'documents'},
+        {path: '/flujos', component: Flows, name: 'flows'}
       ]
     }
   ]
