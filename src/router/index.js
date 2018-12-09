@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Home from '@/views/Home'
+import Document from '@/views/Document'
 import Layout from '@/views/layouts/authenticated/Index'
 
 Vue.use(Router)
@@ -28,7 +29,8 @@ let router = new Router({
       component: Layout,
       meta: {requiredAuth: true},
       children: [
-        {path: '', component: Home, name: 'home'}
+        {path: '', component: Home, name: 'home'},
+        {path: '/documentos', component: Document, name: 'documents'}
       ]
     }
   ]

@@ -19,3 +19,13 @@ i.material-icons {
   font-size: 20px;
   vertical-align: middle;
 }
+
+.navbar-light {
+  .navbar-nav {
+    .nav-link {
+      &.router-link-exact-active {
+        color: rgba(0, 0, 0, 0.7);
+      }
+    }
+  }
+}
