@@ -1,23 +1,23 @@
 <template lang="pug">
-  .container
-    .row.justify-content-center
-      .col-10
-        h3 Bienvenido
-        p Sistema de Gestión Documental de Procesos Administrativos (SISGEDOPRA), es un software que permite modelar cualquier proceso administrativo de una Institución. Este software fue desarrollado por 4 estudiantes de la Universidad Santiago de Chile.
-        p Los integrantes son:
-        ul
-          li Felipe Gaete (
-            a(href="mailto:felipe.gaete@usach.cl") felipe.gaete@usach.cl
-            |)
-          li  Hugo Saavedra (
-            a(href="mailto:hugo.saavedra@usach.cl") hugo.saavedra@usach.cl
-            |)
-          li  Braulio Castro Estay (
-            a(href="mailto:braulio.castro@usach.cl") braulio.castro@usach.cl
-            |)
-          li  Sebastián Andrés Iturra Valdés (
-            a(href="mailto:sebastian.iturra@usach.cl") sebastian.iturra@usach.cl
-            |)
+.container
+  .row.justify-content-center
+    .col-10
+      h3 Bienvenido
+      p Sistema de Gestión Documental de Procesos Administrativos (SISGEDOPRA), es un software que permite modelar cualquier proceso administrativo de una Institución. Este software fue desarrollado por 4 estudiantes de la Universidad Santiago de Chile.
+      p Los integrantes son:
+      ul
+        li Felipe Gaete (
+          a(href="mailto:felipe.gaete@usach.cl") felipe.gaete@usach.cl
+          |)
+        li  Hugo Saavedra (
+          a(href="mailto:hugo.saavedra@usach.cl") hugo.saavedra@usach.cl
+          |)
+        li  Braulio Castro Estay (
+          a(href="mailto:braulio.castro@usach.cl") braulio.castro@usach.cl
+          |)
+        li  Sebastián Andrés Iturra Valdés (
+          a(href="mailto:sebastian.iturra@usach.cl") sebastian.iturra@usach.cl
+          |)
 
 </template>
 

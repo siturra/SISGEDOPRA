@@ -1,10 +1,10 @@
 <template lang="pug">
-  div
-    <!-- Navbar -->
-    Header
-    <!-- Breadcrumb -->
-    <!-- Breadcrumb -->
-    router-view
+div
+  <!-- Navbar -->
+  Header
+  <!-- Breadcrumb -->
+  <!-- Breadcrumb -->
+  router-view
 </template>
 <script>
 import Header from './Header'

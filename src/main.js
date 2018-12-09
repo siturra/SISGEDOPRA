@@ -12,6 +12,8 @@ import VueAuth from './helpers/auth'
 import router from './router'
 import store from './store'
 
+import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+
 window.Popper = require('popper.js').default
 window.$ = window.jQuery = require('jquery')
 require('bootstrap')
@@ -27,6 +29,7 @@ Vue.config.productionTip = false
 Vue.component('v-input', Vinput)
 Vue.component('v-submit', Vsubmit)
 Vue.component('alert-danger', AlertDanger)
+Vue.component('clip-loader', ClipLoader)
 
 /* eslint-disable no-new */
 new Vue({
