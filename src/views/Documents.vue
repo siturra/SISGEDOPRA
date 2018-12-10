@@ -96,7 +96,12 @@
             h5#asignarModalLabel.modal-title Asignar Documento
             button.close(type='button' data-dismiss='modal' aria-label='Close')
               span(aria-hidden='true') &times;
-          .modal-body
+          .modal-body(v-if="show.transfer")
+            .form-group
+              .alert.alert-success(role="alert") Documento asignado con exito!
+            .modal-footer
+              button.btn.btn-secondary(type='button' data-dismiss='modal') Cerrar
+          .modal-body(v-else)
             .form-group
               label(for='type') Usuario a asignar
               select#user.form-control(v-model="transfer.to" ref="to")
@@ -134,7 +139,8 @@ export default {
         submit: false
       },
       show: {
-        infoFisico: false
+        infoFisico: false,
+        transfer: false
       }
     }
   },
@@ -177,7 +183,7 @@ export default {
     getListDocumentsReceived () {
       this.loading.init = true
       this.axios({
-        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/received`,
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/pending`,
         method: 'GET',
         headers: {
           Authorization: this.$auth.getToken()
@@ -196,6 +202,7 @@ export default {
     },
     setDocumentReceived (id) {
       this.received.id_document = id
+      this.receivedtransferDocument(id)
     },
     transferDocument () {
       this.loading.submit = true
@@ -216,6 +223,23 @@ export default {
             let firstError = Object.keys(this.errors)[0]
             this.$refs[firstError].$refs[firstError].focus()
           }
+        })
+        .finally(() => {
+          this.loading.submit = false
+        })
+    },
+    receivedtransferDocument (id) {
+      this.loading.submit = true
+      this.axios({
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/transfers/${id}/approve`,
+        method: 'POST',
+        headers: {
+          Authorization: this.$auth.getToken()
+        },
+        data: this.transfer
+      })
+        .then((response) => {
+          console.log(response.data)
         })
         .finally(() => {
           this.loading.submit = false
