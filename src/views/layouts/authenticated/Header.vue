@@ -10,12 +10,12 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.bg-white.border-bottom.shadow-
           span.sr-only (current)
       li.nav-item
         router-link.nav-link(:to="{name: 'documents'}") Documentos
+    //
       li.nav-item.dropdown
         a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Administración
         .dropdown-menu
           a.dropdown-item(href='#') Permisos
           router-link.dropdown-item(:to="{name: 'flows'}") Edición de Flujos
-
     a.btn.btn-link(@click="logout") Salir
 </template>
 <script>

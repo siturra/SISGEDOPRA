@@ -17,7 +17,7 @@ En este repositorio encontrarás el FrontEnd del Software desarrollado bajo las 
 Mientras que el Backend del Software lo podrás encontrar en [https://github.com/braulioUsach/ingeso-SISGEDOPRA-api]
 
 
-#Instalación y Mantención del Software Frontend
+# Instalación y Mantención del Software Frontend
 
 ## 1. Versiones Utilizadas
 
