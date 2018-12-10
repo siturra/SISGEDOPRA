@@ -49,7 +49,7 @@
                 td {{item.name}}
                 td {{(item.type == 1) ? 'Fisico' : 'Digital'}}
                 td.text-right
-                  button.btn.btn-success(type='button' @click="setDocumentReceived(item.id)") Recibido
+                  button.btn.btn-success(type='button' @click="setDocumentReceived(item.transferId)") Recibido
 
   // Modal Crear Documentos
   #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
@@ -200,9 +200,8 @@ export default {
       this.getListUSers(id)
       this.transfer.document = id
     },
-    setDocumentReceived (id) {
-      this.received.id_document = id
-      this.receivedtransferDocument(id)
+    setDocumentReceived (transfer_id) {
+      this.receivedtransferDocument(transfer_id)
     },
     transferDocument () {
       this.loading.submit = true
@@ -228,10 +227,10 @@ export default {
           this.loading.submit = false
         })
     },
-    receivedtransferDocument (id) {
+    receivedtransferDocument (transfer_id) {
       this.loading.submit = true
       this.axios({
-        url: `${process.env.VUE_APP_BACKEND_API_URL}/transfers/${id}/approve`,
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/transfers/${transfer_id}/approve`,
         method: 'POST',
         headers: {
           Authorization: this.$auth.getToken()
