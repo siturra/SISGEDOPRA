@@ -87,7 +87,8 @@ export default {
         data: this.form
       })
         .then((response) => {
-          console.log(response.data)
+          this.$auth.setToken(response.data.token)
+          this.$router.push({path: '/'})
         })
         .catch((error) => {
           this.errors = error.response.data

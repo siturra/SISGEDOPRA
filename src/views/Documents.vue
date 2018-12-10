@@ -161,7 +161,7 @@ export default {
     getListDocuments () {
       this.loading.init = true
       this.axios({
-        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents`,
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/created`,
         method: 'GET',
         headers: {
           Authorization: this.$auth.getToken()
@@ -196,30 +196,6 @@ export default {
     },
     setDocumentReceived (id) {
       this.received.id_document = id
-    },
-    receivedDocument () {
-      this.loading.submit = true
-      this.axios({
-        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/received`,
-        method: 'POST',
-        headers: {
-          Authorization: this.$auth.getToken()
-        },
-        data: this.received
-      })
-        .then((response) => {
-          console.log(response.data)
-        })
-        .catch((error) => {
-          this.errors = error.response.data
-          if (Object.keys(this.errors).length > 0 && Object.keys(this.errors)[0] !== 'error') {
-            let firstError = Object.keys(this.errors)[0]
-            this.$refs[firstError].$refs[firstError].focus()
-          }
-        })
-        .finally(() => {
-          this.loading.submit = false
-        })
     },
     transferDocument () {
       this.loading.submit = true
