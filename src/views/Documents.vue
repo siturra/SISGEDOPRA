@@ -200,8 +200,8 @@ export default {
       this.getListUSers(id)
       this.transfer.document = id
     },
-    setDocumentReceived (transfer_id) {
-      this.receivedtransferDocument(transfer_id)
+    setDocumentReceived (id) {
+      this.receivedtransferDocument(id)
     },
     transferDocument () {
       this.loading.submit = true
@@ -227,10 +227,10 @@ export default {
           this.loading.submit = false
         })
     },
-    receivedtransferDocument (transfer_id) {
+    receivedtransferDocument (id) {
       this.loading.submit = true
       this.axios({
-        url: `${process.env.VUE_APP_BACKEND_API_URL}/transfers/${transfer_id}/approve`,
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/transfers/${id}/approve`,
         method: 'POST',
         headers: {
           Authorization: this.$auth.getToken()
@@ -238,7 +238,7 @@ export default {
         data: this.transfer
       })
         .then((response) => {
-          console.log(response.data)
+          this.getListDocumentsReceived()
         })
         .finally(() => {
           this.loading.submit = false
