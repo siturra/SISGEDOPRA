@@ -23,7 +23,7 @@
             tr
               th(scope='row') Tipo de envio
               td {{(document.type == 1) ? 'Físico' : 'Digital'}}
-
+      //
         table.table
           thead
             tr
