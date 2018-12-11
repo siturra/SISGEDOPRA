@@ -5,12 +5,13 @@
       h3 Documentos
     .col-2.text-right
       button.btn.btn-outline-primary(type='button' data-toggle='modal' data-target='#exampleModal')
+        i.material-icons note_add
         | Crear Documento
 
   .row.justify-content-center
     .col-3
       #v-pills-tab.nav.flex-column.nav-pills(role='tablist' aria-orientation='vertical')
-        a#v-pills-v-pills-home.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Pendientes por asignar ({{items.length}})
+        a#v-pills-v-pills-home.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Pendientes por asignar
         a#v-pills-messages-tab.nav-link(data-toggle='pill' href='#v-pills-messages' role='tab' aria-controls='v-pills-messages' aria-selected='false') Confirmar recepción ({{itemsWaitingApproved.length}})
         a#v-pills-profile-tab.nav-link(data-toggle='pill' href='#v-pills-profile' role='tab' aria-controls='v-pills-profile' aria-selected='false') Recibidos ({{itemsReceived.length}})
         a#v-pills-finished-tab.nav-link(data-toggle='pill' href='#v-pills-finished' role='tab' aria-controls='v-pills-finished' aria-selected='false') Finalizados ({{itemsFinished.length}})
@@ -141,8 +142,8 @@
               button.btn.btn-secondary(type='button' data-dismiss='modal') Cerrar
           .modal-body(v-else)
             .form-group
-              label(for='type') Usuario a asignar
-              select#user.form-control(v-model="transfer.to" ref="to")
+              label(for='to') Usuario a asignar
+              select#to.form-control(v-model="transfer.to" ref="to")
                 option(value="") Seleccione usuario a asignar
                 option(v-for="item in listsUsers" :value="item.id") {{item.firstName}} {{item.lastName}} ({{item.email.toLowerCase()}})
 
@@ -300,6 +301,11 @@ export default {
         .then((response) => {
           this.init()
           this.show.transfer = true
+          this.$notify({
+            title: 'Success',
+            message: 'Flujo del documento finalizado!',
+            type: 'success'
+          })
         })
         .catch((error) => {
           this.errors = error.response.data
@@ -325,6 +331,11 @@ export default {
         .then((response) => {
           this.init()
           this.show.transfer = true
+          this.$notify({
+            title: 'Success',
+            message: 'Documento asignado con exito!',
+            type: 'success'
+          })
         })
         .catch((error) => {
           this.errors = error.response.data
@@ -370,6 +381,11 @@ export default {
             this.show.infoFisico = true
           }
           this.items.push(this.form)
+          this.$notify({
+            title: 'Success',
+            message: 'Documento creado con exito!',
+            type: 'success'
+          })
         })
         .catch((error) => {
           this.errors = error.response.data

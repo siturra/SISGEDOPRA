@@ -14,12 +14,16 @@ import store from './store'
 
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 
+import { Notification } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
 window.Popper = require('popper.js').default
 window.$ = window.jQuery = require('jquery')
 require('bootstrap')
 
 Vue.use(VueHttp)
 Vue.use(VueAuth)
+Vue.prototype.$notify = Notification
 
 Vue.config.productionTip = false
 
