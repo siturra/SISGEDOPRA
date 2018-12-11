@@ -32,7 +32,7 @@
                   router-link(:to="{ name: 'document', params: { id: item.id }}") {{item.id}}
                 td
                   router-link(:to="{ name: 'document', params: { id: item.id }}") {{item.name}}
-                td {{(item.type == 1) ? 'Fisico ' : 'Digital'}}
+                td {{(item.type == 1) ? 'Físico ' : 'Digital'}}
                 td.text-right
                   button.btn.btn-warning(v-if="item.currentUserAssigned == null" type='button' data-toggle='modal' data-target='#asignarModal' @click="setDocumentAssign(item.id)") Asignar
 
@@ -49,7 +49,7 @@
               tr(v-for="item in itemsReceived")
                 th(scope='row') {{item.id}}
                 td {{item.name}}
-                td {{(item.type == 1) ? 'Fisico' : 'Digital'}}
+                td {{(item.type == 1) ? 'Físico' : 'Digital'}}
                 td.text-right
                   button.btn.btn-success(type='button' @click="setDocumentReceived(item.transferId)") Recibido
 
@@ -68,7 +68,7 @@
                   router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentId}}
                 td
                   router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentName}}
-                td {{(item.type == 1) ? 'Fisico ' : 'Digital'}}
+                td {{(item.type == 1) ? 'Físico ' : 'Digital'}}
                 td.text-right
                   button.btn.btn-success(type='button' @click="setDocumentReceived(item.transferId)") Recibido
 
@@ -86,7 +86,7 @@
                   router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentId}}
                 td
                   router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentName}}
-                td {{(item.type == 1) ? 'Fisico ' : 'Digital'}}
+                td {{(item.type == 1) ? 'Físico ' : 'Digital'}}
 
   // Modal Crear Documentos
   #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
@@ -117,9 +117,9 @@
             placeholder=""
             )
             .form-group
-              label(for='type') Tipo de Envío
+              label(for='type') Tipo de envío
               select#type.form-control(v-model="form.type")
-                option(value=1) Fisico
+                option(value=1) Físico
 
             .modal-footer
               button.btn.btn-secondary(type='button' data-dismiss='modal') Cerrar

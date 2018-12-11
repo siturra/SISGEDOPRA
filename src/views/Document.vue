@@ -20,7 +20,7 @@
               td {{document.name}}
             tr
               th(scope='row') Tipo de envio
-              td {{(document.type == 1) ? 'Fisico' : 'Digital'}}
+              td {{(document.type == 1) ? 'Físico' : 'Digital'}}
 
         table.table()
           thead
@@ -30,7 +30,7 @@
             tr(v-for="item in items")
               th(scope='row') {{item.id}}
               td {{item.name}}
-              td {{(item.type == 1) ? 'Fisico' : 'Digital'}}
+              td {{(item.type == 1) ? 'Físico' : 'Digital'}}
 </template>
 <script>
 export default {
