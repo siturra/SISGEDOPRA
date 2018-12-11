@@ -101,7 +101,7 @@
             .alert.alert-info(role="alert")
               | Recuerda agregar el identificador
               b  {{form.id}}
-              |  en el documento a enviar, para que el receptor al recibirla pueda ingresar al sistema y notificar que ya recibi&oacute; el documento.
+              |  en el documento a enviar. Este identificador será necesario cuando el receptor confirme el traspaso del documento.
 
             .modal-footer
               button.btn.btn-secondary(type='button' data-dismiss='modal') Cerrar
