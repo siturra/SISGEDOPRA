@@ -6,17 +6,23 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.bg-white.border-bottom.shadow-
   #navbarSupportedContent.collapse.navbar-collapse
     ul.navbar-nav.mr-auto
       li.nav-item
-        router-link.nav-link(:to="{name: 'home'}") Inicio
+        router-link.nav-link(:to="{name: 'home'}")
+          i.material-icons home
+          | Inicio
           span.sr-only (current)
       li.nav-item
-        router-link.nav-link(:to="{name: 'documents'}") Documentos
+        router-link.nav-link(:to="{name: 'documents'}")
+          i.material-icons assignment
+          | Documentos
     //
       li.nav-item.dropdown
         a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Administración
         .dropdown-menu
           a.dropdown-item(href='#') Permisos
           router-link.dropdown-item(:to="{name: 'flows'}") Edición de Flujos
-    a.btn.btn-link(@click="logout") Salir
+    a.btn.btn-link(@click="logout")
+      i.material-icons power_settings_new
+      | Salir
 </template>
 <script>
 export default {

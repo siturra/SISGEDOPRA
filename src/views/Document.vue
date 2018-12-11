@@ -2,9 +2,11 @@
 .container
   .row.justify-content-center.mb-3
     .col-6
-      h3 Documento
+      h3 Detalle de un Documento
     .col-2.text-right
-      router-link.btn.btn-outline-secondary(:to="{name: 'documents'}") Volver
+      router-link.btn.btn-outline-secondary(:to="{name: 'documents'}")
+        i.material-icons keyboard_arrow_left
+        | Volver
 
   .row.justify-content-center
     .col-8.col-sm-12
@@ -22,15 +24,18 @@
               th(scope='row') Tipo de envio
               td {{(document.type == 1) ? 'Físico' : 'Digital'}}
 
-        table.table()
+        table.table
           thead
             tr
-              th(scope='col') Estados
+              th(scope='col') Desde
+              th(scope='col') Hasta
+              th(scope='col') Fecha
           tbody
-            tr(v-for="item in items")
-              th(scope='row') {{item.id}}
-              td {{item.name}}
-              td {{(item.type == 1) ? 'Físico' : 'Digital'}}
+            tr(v-for="item in document.transfers")
+              td {{item.userFromName}} {{item.userFromLastName}}
+              td {{item.userToName}} {{item.userToLastName}}
+              td {{item.createdAt}}
+
 </template>
 <script>
 export default {

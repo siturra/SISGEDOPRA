@@ -1,7 +1,7 @@
 <template lang="pug">
 .container-fluid
   .row.justify-content-center.mb-3
-    .col-6
+    .offset-3.col-6
       h3 Documentos
     .col-2.text-right
       button.btn.btn-outline-primary(type='button' data-toggle='modal' data-target='#exampleModal')
@@ -9,9 +9,9 @@
         | Crear Documento
 
   .row.justify-content-center
-    .col-3
+    .col-sm-3.col-3
       #v-pills-tab.nav.flex-column.nav-pills(role='tablist' aria-orientation='vertical')
-        a#v-pills-v-pills-home.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Pendientes por asignar
+        a#v-pills-v-pills-home.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Creados ({{items.length}})
         a#v-pills-messages-tab.nav-link(data-toggle='pill' href='#v-pills-messages' role='tab' aria-controls='v-pills-messages' aria-selected='false') Confirmar recepción ({{itemsWaitingApproved.length}})
         a#v-pills-profile-tab.nav-link(data-toggle='pill' href='#v-pills-profile' role='tab' aria-controls='v-pills-profile' aria-selected='false') Recibidos ({{itemsReceived.length}})
         a#v-pills-finished-tab.nav-link(data-toggle='pill' href='#v-pills-finished' role='tab' aria-controls='v-pills-finished' aria-selected='false') Finalizados ({{itemsFinished.length}})
@@ -28,14 +28,16 @@
                 th(scope='col') Tipo de envio
                 th.text-right(scope='col') Acciones
             tbody
-              tr(v-for="item in items" v-if="item.currentUserAssigned == null")
+              tr(v-for="item in items")
                 th(scope='row')
                   router-link(:to="{ name: 'document', params: { id: item.id }}") {{item.id}}
                 td
                   router-link(:to="{ name: 'document', params: { id: item.id }}") {{item.name}}
                 td {{(item.type == 1) ? 'Físico ' : 'Digital'}}
                 td.text-right
-                  button.btn.btn-warning(v-if="item.currentUserAssigned == null" type='button' data-toggle='modal' data-target='#asignarModal' @click="setDocumentAssign(item.id)") Asignar
+                  button.btn.btn-warning(v-if="item.currentUserAssigned == null" type='button' data-toggle='modal' data-target='#asignarModal' @click="setDocumentAssign(item.id)")
+                    i.material-icons assignment
+                    | Asignar
         #v-pills-messages.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-messages')
           clip-loader(v-if="loading.init" color="#002f6c" size="60px")
           table.table(v-else)
@@ -44,7 +46,7 @@
                 th(scope='col') ID
                 th(scope='col') Nombre
                 th(scope='col') Tipo de envio
-                th(scope='col') Acciones
+                th.text-right(scope='col') Acciones
             tbody
               tr(v-for="item in itemsWaitingApproved")
                 th(scope='row')
@@ -67,12 +69,19 @@
                 th.text-right(scope='col') Acciones
             tbody
               tr(v-for="item in itemsReceived")
-                th(scope='row') {{item.id}}
-                td {{item.name}}
+                th(scope='row')
+                  router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentId}}
+                td
+                  router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentName}}
                 td Físico
                 td.text-right
-                  button.btn.btn-warning(type='button' data-toggle='modal' data-target='#asignarModal' @click="setDocumentAssign(item.id)") Asignar
-                  button.btn.btn-success(type='button' data-toggle='modal' data-target='#asignarModal' @click="finishedDocument(item.id)") Finalizar
+                  button.btn.btn-warning(type='button' data-toggle='modal' data-target='#asignarModal' @click="setDocumentAssign(item.documentId)")
+                    i.material-icons assignment
+                    | Asignar
+                  |
+                  button.btn.btn-success(type='button' @click="setFinishedDocument(item.documentId)")
+                    i.material-icons assignment_turned_in
+                    | Finalizar
 
         #v-pills-finished.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-finished')
           clip-loader(v-if="loading.init" color="#002f6c" size="60px")
@@ -149,7 +158,9 @@
 
             .modal-footer
               button.btn.btn-secondary(type='button' data-dismiss='modal') Cerrar
-              v-submit(:loading="loading.submit") Asignar
+              v-submit(:loading="loading.submit")
+                i.material-icons assignment
+                | Asignar
 </template>
 <script>
 export default {
@@ -288,15 +299,14 @@ export default {
     setDocumentReceived (id) {
       this.receivedtransferDocument(id)
     },
-    finishedDocument () {
+    finishedDocument (id) {
       this.loading.submit = true
       this.axios({
-        url: `${process.env.VUE_APP_BACKEND_API_URL}/transfers`,
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/${id}/finish`,
         method: 'POST',
         headers: {
           Authorization: this.$auth.getToken()
-        },
-        data: this.transfer
+        }
       })
         .then((response) => {
           this.init()
@@ -360,8 +370,11 @@ export default {
       })
         .then((response) => {
           this.init()
-        })
-        .finally(() => {
+          this.$notify({
+            title: 'Success',
+            message: 'Documento confirmado con exito!',
+            type: 'success'
+          })
           this.loading.submit = false
         })
     },
