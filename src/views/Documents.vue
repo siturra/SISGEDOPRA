@@ -1,5 +1,5 @@
 <template lang="pug">
-.container
+.container-fluid
   .row.justify-content-center.mb-3
     .col-6
       h3 Documentos
@@ -8,14 +8,16 @@
         | Crear Documento
 
   .row.justify-content-center
-    .col-8
-      ul#myTab.nav.nav-pills.nav-fill(role='tablist')
-        li.nav-item
-          a#home-tab.nav-link.active(data-toggle='tab' href='#home' role='tab' aria-controls='home' aria-selected='true') Mis Documentos Creados
-        li.nav-item
-          a#profile-tab.nav-link(data-toggle='tab' href='#profile' role='tab' aria-controls='profile' aria-selected='false') Mis Documentos Asignados ({{itemsReceived.length}})
-      #myTabContent.tab-content.pt-3
-        #home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='home-tab')
+    .col-3
+      #v-pills-tab.nav.flex-column.nav-pills(role='tablist' aria-orientation='vertical')
+        a#v-pills-v-pills-home.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Pendientes de Asignar ({{items.length}})
+        a#v-pills-profile-tab.nav-link(data-toggle='pill' href='#v-pills-profile' role='tab' aria-controls='v-pills-profile' aria-selected='false') Recibidos ({{itemsReceived.length}})
+        a#v-pills-messages-tab.nav-link(data-toggle='pill' href='#v-pills-messages' role='tab' aria-controls='v-pills-messages' aria-selected='false') En espera de aprobación ({{itemsWaitingApproved.length}})
+        a#v-pills-finished-tab.nav-link(data-toggle='pill' href='#v-pills-finished' role='tab' aria-controls='v-pills-finished' aria-selected='false') Finalizados ({{itemsFinished.length}})
+
+    .col-sm-9.col-8
+      #v-pills-tabContent.tab-content.pt-3
+        #v-pills-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='v-pills-home')
           clip-loader(v-if="loading.init" color="#002f6c" size="60px")
           table.table(v-else)
             thead
@@ -34,7 +36,7 @@
                 td.text-right
                   button.btn.btn-warning(v-if="item.currentUserAssigned == null" type='button' data-toggle='modal' data-target='#asignarModal' @click="setDocumentAssign(item.id)") Asignar
 
-        #profile.tab-pane.fade(role='tabpanel' aria-labelledby='profile-tab')
+        #v-pills-profile.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-profile')
           clip-loader(v-if="loading.init" color="#002f6c" size="60px")
           table.table(v-else)
             thead
@@ -50,6 +52,41 @@
                 td {{(item.type == 1) ? 'Fisico' : 'Digital'}}
                 td.text-right
                   button.btn.btn-success(type='button' @click="setDocumentReceived(item.transferId)") Recibido
+
+        #v-pills-messages.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-messages')
+          clip-loader(v-if="loading.init" color="#002f6c" size="60px")
+          table.table(v-else)
+            thead
+              tr
+                th(scope='col') ID
+                th(scope='col') Nombre
+                th(scope='col') Tipo de envio
+                th(scope='col') Acciones
+            tbody
+              tr(v-for="item in itemsWaitingApproved")
+                th(scope='row')
+                  router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentId}}
+                td
+                  router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentName}}
+                td {{(item.type == 1) ? 'Fisico ' : 'Digital'}}
+                td.text-right
+                  button.btn.btn-success(type='button' @click="setDocumentReceived(item.transferId)") Recibido
+
+        #v-pills-finished.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-finished')
+          clip-loader(v-if="loading.init" color="#002f6c" size="60px")
+          table.table(v-else)
+            thead
+              tr
+                th(scope='col') ID
+                th(scope='col') Nombre
+                th(scope='col') Tipo de envio
+            tbody
+              tr(v-for="item in itemsFinished")
+                th(scope='row')
+                  router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentId}}
+                td
+                  router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentName}}
+                td {{(item.type == 1) ? 'Fisico ' : 'Digital'}}
 
   // Modal Crear Documentos
   #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
@@ -132,8 +169,10 @@ export default {
         to: ''
       },
       listsUsers: [],
-      itemsReceived: [],
       items: [],
+      itemsReceived: [],
+      itemsWaitingApproved: [],
+      itemsFinished: [],
       loading: {
         init: false,
         submit: false
@@ -147,6 +186,8 @@ export default {
   mounted () {
     this.getListDocuments()
     this.getListDocumentsReceived()
+    this.getListDocumentsWaitingApproved()
+    this.getListDocumentsFinished()
   },
   methods: {
     getListUSers (id) {
@@ -183,7 +224,7 @@ export default {
     getListDocumentsReceived () {
       this.loading.init = true
       this.axios({
-        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/pending`,
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/received`,
         method: 'GET',
         headers: {
           Authorization: this.$auth.getToken()
@@ -196,7 +237,40 @@ export default {
           this.loading.init = false
         })
     },
+    getListDocumentsWaitingApproved () {
+      this.loading.init = true
+      this.axios({
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/pending`,
+        method: 'GET',
+        headers: {
+          Authorization: this.$auth.getToken()
+        }
+      })
+        .then((response) => {
+          this.itemsWaitingApproved = response.data
+        })
+        .finally(() => {
+          this.loading.init = false
+        })
+    },
+    getListDocumentsFinished () {
+      this.loading.init = true
+      this.axios({
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/finished`,
+        method: 'GET',
+        headers: {
+          Authorization: this.$auth.getToken()
+        }
+      })
+        .then((response) => {
+          this.itemsFinished = response.data
+        })
+        .finally(() => {
+          this.loading.init = false
+        })
+    },
     setDocumentAssign (id) {
+      this.show.transfer = false
       this.getListUSers(id)
       this.transfer.document = id
     },
@@ -214,7 +288,8 @@ export default {
         data: this.transfer
       })
         .then((response) => {
-          console.log(response.data)
+          this.getListDocuments()
+          this.show.transfer = true
         })
         .catch((error) => {
           this.errors = error.response.data

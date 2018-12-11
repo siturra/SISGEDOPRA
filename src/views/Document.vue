@@ -7,7 +7,7 @@
       router-link.btn.btn-outline-secondary(:to="{name: 'documents'}") Volver
 
   .row.justify-content-center
-    .col-8
+    .col-8.col-sm-12
       clip-loader(v-if="loading.init" color="#002f6c" size="60px")
       div(v-else)
         table.col-6.table.table-bordered
