@@ -10,8 +10,8 @@
   .row.justify-content-center
     .col-3
       #v-pills-tab.nav.flex-column.nav-pills(role='tablist' aria-orientation='vertical')
-        a#v-pills-v-pills-home.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Pendientes por Asignar ({{items.length}})
-        a#v-pills-messages-tab.nav-link(data-toggle='pill' href='#v-pills-messages' role='tab' aria-controls='v-pills-messages' aria-selected='false') Confirmar Recepción ({{itemsWaitingApproved.length}})
+        a#v-pills-v-pills-home.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Pendientes por asignar ({{items.length}})
+        a#v-pills-messages-tab.nav-link(data-toggle='pill' href='#v-pills-messages' role='tab' aria-controls='v-pills-messages' aria-selected='false') Confirmar recepción ({{itemsWaitingApproved.length}})
         a#v-pills-profile-tab.nav-link(data-toggle='pill' href='#v-pills-profile' role='tab' aria-controls='v-pills-profile' aria-selected='false') Recibidos ({{itemsReceived.length}})
         a#v-pills-finished-tab.nav-link(data-toggle='pill' href='#v-pills-finished' role='tab' aria-controls='v-pills-finished' aria-selected='false') Finalizados ({{itemsFinished.length}})
 
