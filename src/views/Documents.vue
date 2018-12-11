@@ -99,7 +99,7 @@
               span(aria-hidden='true') &times;
           .modal-body(v-if="show.infoFisico")
             .alert.alert-info(role="alert")
-              | Recuerda agregar el Identificador
+              | Recuerda agregar el identificador
               b  {{form.id}}
               |  en el documento a enviar, para que el receptor al recibirla pueda ingresar al sistema y notificar que ya recibi&oacute; el documento.
 
