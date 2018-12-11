@@ -190,6 +190,12 @@ export default {
     this.getListDocumentsFinished()
   },
   methods: {
+    init () {
+      this.getListDocuments()
+      this.getListDocumentsReceived()
+      this.getListDocumentsWaitingApproved()
+      this.getListDocumentsFinished()
+    },
     getListUSers (id) {
       this.axios({
         url: `${process.env.VUE_APP_BACKEND_API_URL}/documents/${id}/allowedReceivers`,
@@ -288,7 +294,7 @@ export default {
         data: this.transfer
       })
         .then((response) => {
-          this.getListDocuments()
+          this.init()
           this.show.transfer = true
         })
         .catch((error) => {
@@ -313,7 +319,7 @@ export default {
         data: this.transfer
       })
         .then((response) => {
-          this.getListDocumentsReceived()
+          this.init()
         })
         .finally(() => {
           this.loading.submit = false
