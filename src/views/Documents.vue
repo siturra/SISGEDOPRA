@@ -27,7 +27,7 @@
                 th(scope='col') Tipo de envio
                 th.text-right(scope='col') Acciones
             tbody
-              tr(v-for="item in items")
+              tr(v-for="item in items" v-if="item.currentUserAssigned == null")
                 th(scope='row')
                   router-link(:to="{ name: 'document', params: { id: item.id }}") {{item.id}}
                 td
@@ -35,24 +35,6 @@
                 td {{(item.type == 1) ? 'Físico ' : 'Digital'}}
                 td.text-right
                   button.btn.btn-warning(v-if="item.currentUserAssigned == null" type='button' data-toggle='modal' data-target='#asignarModal' @click="setDocumentAssign(item.id)") Asignar
-
-        #v-pills-profile.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-profile')
-          clip-loader(v-if="loading.init" color="#002f6c" size="60px")
-          table.table(v-else)
-            thead
-              tr
-                th(scope='col') ID
-                th(scope='col') Nombre
-                th(scope='col') Tipo de envio
-                th.text-right(scope='col') Acciones
-            tbody
-              tr(v-for="item in itemsReceived")
-                th(scope='row') {{item.id}}
-                td {{item.name}}
-                td {{(item.type == 1) ? 'Físico' : 'Digital'}}
-                td.text-right
-                  button.btn.btn-success(type='button' @click="setDocumentReceived(item.transferId)") Recibido
-
         #v-pills-messages.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-messages')
           clip-loader(v-if="loading.init" color="#002f6c" size="60px")
           table.table(v-else)
@@ -68,9 +50,28 @@
                   router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentId}}
                 td
                   router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentName}}
-                td {{(item.type == 1) ? 'Físico ' : 'Digital'}}
+                td Físico
                 td.text-right
-                  button.btn.btn-success(type='button' @click="setDocumentReceived(item.transferId)") Recibido
+                  button.btn.btn-success(type='button' @click="setDocumentReceived(item.transferId)")
+                    i.material-icons check
+                    | Confirmar recepción
+        #v-pills-profile.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-profile')
+          clip-loader(v-if="loading.init" color="#002f6c" size="60px")
+          table.table(v-else)
+            thead
+              tr
+                th(scope='col') ID
+                th(scope='col') Nombre
+                th(scope='col') Tipo de envio
+                th.text-right(scope='col') Acciones
+            tbody
+              tr(v-for="item in itemsReceived")
+                th(scope='row') {{item.id}}
+                td {{item.name}}
+                td Físico
+                td.text-right
+                  button.btn.btn-warning(type='button' data-toggle='modal' data-target='#asignarModal' @click="setDocumentAssign(item.id)") Asignar
+                  button.btn.btn-success(type='button' data-toggle='modal' data-target='#asignarModal' @click="finishedDocument(item.id)") Finalizar
 
         #v-pills-finished.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-finished')
           clip-loader(v-if="loading.init" color="#002f6c" size="60px")
@@ -86,7 +87,7 @@
                   router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentId}}
                 td
                   router-link(:to="{ name: 'document', params: { id: item.documentId }}") {{item.documentName}}
-                td {{(item.type == 1) ? 'Físico ' : 'Digital'}}
+                td Físico
 
   // Modal Crear Documentos
   #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
@@ -275,6 +276,9 @@ export default {
           this.loading.init = false
         })
     },
+    setFinishedDocument (id) {
+      this.finishedDocument(id)
+    },
     setDocumentAssign (id) {
       this.show.transfer = false
       this.getListUSers(id)
@@ -282,6 +286,31 @@ export default {
     },
     setDocumentReceived (id) {
       this.receivedtransferDocument(id)
+    },
+    finishedDocument () {
+      this.loading.submit = true
+      this.axios({
+        url: `${process.env.VUE_APP_BACKEND_API_URL}/transfers`,
+        method: 'POST',
+        headers: {
+          Authorization: this.$auth.getToken()
+        },
+        data: this.transfer
+      })
+        .then((response) => {
+          this.init()
+          this.show.transfer = true
+        })
+        .catch((error) => {
+          this.errors = error.response.data
+          if (Object.keys(this.errors).length > 0 && Object.keys(this.errors)[0] !== 'error') {
+            let firstError = Object.keys(this.errors)[0]
+            this.$refs[firstError].$refs[firstError].focus()
+          }
+        })
+        .finally(() => {
+          this.loading.submit = false
+        })
     },
     transferDocument () {
       this.loading.submit = true
